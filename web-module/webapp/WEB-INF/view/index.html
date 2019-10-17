@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title></title>
+</head>
+<link rel="stylesheet" type="text/css" href="../css/iview.css"/>
+<style>
+    body {
+        padding: 10px;
+    }
+</style>
+<script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/iview.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+
+    $(function () {
+        var myModel = {
+            mycount: 100, mycols: [{title: '编号', key: 'id'}, {title: '姓名', key: 'userName'},
+                {title: '性别', key: 'sex'}, {title: '出生日期', key: 'birt'}, {title: '年龄', key: 'age'}], stuList: []
+        };
+        var myViewModel = new Vue({
+            data: myModel,
+            el: "#myView"
+        });
+
+        $.ajax({
+            type: "get",
+            url: "stuAll",
+            dataType: "json",
+            success: function (res) {
+                myModel.stuList = res;
+            },
+            error: function () {
+
+            }
+        });
+    })
+</script>
+<body>
+<div id="myView" style="width:100%;height:100%;">
+    <i-table stripe border :columns="mycols" :data="stuList">
+
+    </i-table>
+</div>
+</body>
+</html>

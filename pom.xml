@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.nf</groupId>
+    <artifactId>student</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>entity-module</module>
+        <module>dao-module</module>
+        <module>service-module</module>
+        <module>action-module</module>
+        <module>web-module</module>
+    </modules>
+        <properties>
+                <spring-version>5.1.0.RELEASE</spring-version>
+                <jackson-version>2.9.7</jackson-version>
+                <jstl-version>1.2</jstl-version>
+                <mybatis-version>3.4.6</mybatis-version>
+                <mybatis-spring-version>1.3.2</mybatis-spring-version>
+                <c3p0-version>0.9.5.2</c3p0-version>
+                <mysql-version>8.0.12</mysql-version>
+            </properties>
+
+            <dependencies>
+                <!--1.Spring包-->
+                <dependency>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-beans</artifactId>
+                    <version>${spring-version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-context</artifactId>
+                    <version>${spring-version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-core</artifactId>
+                    <version>${spring-version}</version>
+                </dependency>
+
+                <!--1.Spring项目跟mybatic中融合需要的2个东西-->
+                <dependency>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-tx</artifactId>
+                    <version>${spring-version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-jdbc</artifactId>
+                    <version>${spring-version}</version>
+                </dependency>
+
+                <!--2.SpringMVC的包-->
+                <dependency>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-web</artifactId>
+                    <version>${spring-version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-webmvc</artifactId>
+                    <version>${spring-version}</version>
+                </dependency>
+
+                <!--2.SpringMVC中，ResponseBody时要用到的默认的JSON解析引擎-->
+                <dependency>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-databind</artifactId>
+                    <version>${jackson-version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-core</artifactId>
+                    <version>${jackson-version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-annotations</artifactId>
+                    <version>${jackson-version}</version>
+                </dependency>
+
+
+                <!--4.JSP的JSTL依赖，如果不用，可以不写-->
+                <dependency>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>jstl</artifactId>
+                    <version>${jstl-version}</version>
+                </dependency>
+
+                <!--5.MyBatis的依赖包-->
+                <dependency>
+                    <groupId>org.mybatis</groupId>
+                    <artifactId>mybatis</artifactId>
+                    <version>${mybatis-version}</version>
+                </dependency>
+
+                <!--
+                5.
+                1.MyBatis的SqlSession提供指定的方法来处理编程式的事务（手动写commit或rollback等代码）
+                2.但当使用mybatis-spring这个组件时，bean会使用Spring管理的SqlSession。
+                Spring通常都是处理事务（不用程序员来写commit）
+
+                -->
+                <dependency>
+                    <groupId>org.mybatis</groupId>
+                    <artifactId>mybatis-spring</artifactId>
+                    <version>${mybatis-spring-version}</version>
+                </dependency>
+
+                <dependency>
+                    <groupId>com.mchange</groupId>
+                    <artifactId>c3p0</artifactId>
+                    <version>${c3p0-version}</version>
+                </dependency>
+                <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+                <dependency>
+                    <groupId>mysql</groupId>
+                    <artifactId>mysql-connector-java</artifactId>
+                    <version>8.0.18</version>
+                </dependency>
+            </dependencies>
+</project>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!-- 自动扫描 -->
+    <context:component-scan base-package="com.nf" />
+    <!-- 引入配置文件,spring2.5以后的写法，之前的是bean class=org.springframework.beans.factory.config.PropertyPlaceholderConfigurer -->
+    <context:property-placeholder location="classpath:jdbc.properties"></context:property-placeholder>
+    <!--配置C3P0 dataSource-->
+    <bean id="myDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${jdbc.driverClassName}"></property>
+        <property name="jdbcUrl" value="${jdbc.url}"></property>
+        <property name="user" value="${jdbc.username}"></property>
+        <property name="password" value="${jdbc.password}"></property>
+        <!-- 连接池中保留的最小连接数，默认为：3 -->
+        <property name="minPoolSize" value="3" />
+        <!-- 连接池中保留的最大连接数。默认值: 15 -->
+        <property name="maxPoolSize" value="15" />
+        <!-- 初始化连接池中的连接数，取值应在minPoolSize与maxPoolSize之间，默认为3 -->
+        <property name="initialPoolSize" value="3"/>
+    </bean>
+
+    <!--
+    此处，SqlSessionFactory以及MapperScannerConfigurer就是书本12.4章的内容
+    作用：实现书本第3章代码，一行都不用写，直接生成dao的实现类，不用任何编码
+    也不需要写一行mybatis的代码。
+    ps.这就是依赖于spring神的帮助
+    -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="myDataSource"></property>
+        <property name="mapperLocations" value="classpath*:mapper/*.xml"></property>
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--扫描dao层的接口interface-->
+        <property name="basePackage" value="com.nf.dao" />
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+    </bean>
+    <!--mapper xml文件就像实现类，它是怎么知道对应哪个dao层的接口的？-->
+
+    <!--声明式事务管理-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="myDataSource"></property>
+    </bean>
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"></tx:annotation-driven>
+
+</beans>
