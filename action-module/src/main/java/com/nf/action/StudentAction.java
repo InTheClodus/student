@@ -19,7 +19,7 @@ public class StudentAction {
         return studentService.getAllStudents();
     }
     @RequestMapping("/index")
-    private String rk(){
+    private String index(){
         return "index";
     }
 }
